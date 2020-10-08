@@ -18,7 +18,7 @@ class Queue():
 
 class Graph:
 
-   #  graph as dictionary of vertices mapping labels to edges
+   # graph as dictionary of vertices mapping labels to edges
 
     def __init__(self):
         self.vertices = {}
