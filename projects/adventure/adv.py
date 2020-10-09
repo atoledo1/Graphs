@@ -28,6 +28,67 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
+def dft(starting_room):
+
+    opposite_directions = {
+        's':'n',
+        'n':'s',
+        'e':'w',
+        'w':'e'
+        }
+   
+    path = []
+   
+    rooms = {}
+
+    backup_path = []
+
+   
+   
+   
+    while len(rooms) < len(room_graph) - 1:
+
+       
+        if player.current_room.id not in rooms:
+            
+            rooms[player.current_room.id] = player.current_room.get_exits()
+        
+            if len(backup_path):
+            
+                inverse_direction = backup_path[-1]
+             
+                rooms[player.current_room.id].remove(inverse_direction)
+
+
+       
+        while not len(rooms[player.current_room.id]):
+            if len(backup_path):
+               
+                backing_direction = backup_path.pop() 
+               
+                path.append(backing_direction)
+             
+                player.travel(backing_direction)
+                
+          
+            else:
+                break
+
+       
+        next_direction = rooms[player.current_room.id].pop()
+
+       
+        path.append(next_direction)
+        backup_path.append(opposite_directions[next_direction])
+
+       
+        player.travel(next_direction)
+        
+    return path
+                    
+
+ 
+traversal_path = dft(player.current_room)
 
 
 
@@ -51,12 +112,12 @@ else:
 #######
 # UNCOMMENT TO WALK AROUND
 #######
-player.current_room.print_room_description(player)
-while True:
-    cmds = input("-> ").lower().split(" ")
-    if cmds[0] in ["n", "s", "e", "w"]:
-        player.travel(cmds[0], True)
-    elif cmds[0] == "q":
-        break
-    else:
-        print("I did not understand that command.")
+#player.current_room.print_room_description(player)
+#while True:
+    #cmds = input("-> ").lower().split(" ")
+    #if cmds[0] in ["n", "s", "e", "w"]:
+       # player.travel(cmds[0], True)
+    #elif cmds[0] == "q":
+       # break
+   # else:
+     #   print("I did not understand that command.")
